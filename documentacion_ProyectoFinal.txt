@@ -1,0 +1,67 @@
+PROYECTO FINAL DIPLOMATURA EN SPRING BOOT - GESTION DE ESTACIONAMIENTO MEDIDO MDQ
+GOIZUETA JOAQUÍN
+
+*PROCESAMIETO DE LA INFORMACION GEOESPACIAL PARA LA CREACION DE LA BASE DE DATOS
+
+    El procesamiento de los datos geoespaciales que contruyen el mapa de
+    zonas de estacionamientos medidos de la ciudad sera procesada mediante
+    un script de Python de desarrollo propio, esto se debe a la facilidad
+    de herramientas que ofrece este lenguaje para el procesamiento y el 
+    manejo de grandes volumenes de datos como son pandas, numpy y geopandas,
+    ademas existe un interes particular de este proyecto por llevar a cabo
+    la integracion de scripts Python en programas desarrollados en Java.
+
+    La informacion de los datos geoespaciales se obtiene de la pagina 
+    oficial de open data de la Municipalidad de General Pueyredon por medio
+    de la descarga de un archivo shape, un tipo de archivo comunemte 
+    utilizado en sistemas de informacion geoespacial, estos archivos estan
+    compuestos por varias archivos relacionados que se almacenan en un
+    mismo directorio:
+
+        .shp : extensión del archivo principal, almacena la geometria de
+        las entidades geoespaciales, como puntos, lineas y polígonos.
+        .shx : extensión del archivo indice que permite acceder rapidamente
+        a las entidades en el archivo principal.
+        .dbf : extensión de la base de datos que almacena los atributos
+        asociados a las entidades geoespaciales.
+        .prj : extensión del archivo de proyección que define el sistema
+        de coordenadas. 
+
+    Para explorar los archivos shape y concoer la informacion geoespacial
+    disponible utilizaremos las bibliotecas de Python geopandas y matplotlib.
+
+    Al realizar la contruccion de nuestro geoDataFrame obtenemos que nuestro
+    archivo shape esta compuesto por un sistema de filas y columnas donde
+    cada fila representa una entidad geoespacial en este caso una calle y
+    que las columnas almacenan informacion sobre estas entidades como sus
+    atributos y su geometria. El formato del data frame seria el siguiente:
+
+    7 columnas:
+        >COD_CALLES: codigo numerico para identificar la calle
+        >NOM_COMPLETO: nombre completo de la calle
+        >L_F_ADD: representa el valor incial de las direcciones del lado izq 
+        >L_T_ADD: representa el valor final de las direcciones del lado izq
+        >R_F_ADD: representa el valor incial de las direcciones del lado der 
+        >R_T_ADD: representa el valor final de las direcciones del lado der
+        >GEOMETRY: geometria de las entidades
+    
+    La columna geomety en un GeoDataFrame almacena datos geoespaciales como
+    la geometria de las entidades, en el contexto de una calle generalmente
+    representa la FORMA y la UBICACIÓN en terminos de coordenadas geográficas
+    (latitud y longitud), estos no son almacenados como una coordenada para
+    toda la extensión de la calle ya que seria poco practico y limitado solo
+    a la longitud. Debido a que una calle es una entidad geometrica 
+    compleja con curvas, giros, longitud y caracteristicas topograficas la
+    entidad es almacenada como una representación geométrica u objeto de 
+    tipo LineString. Este objeto esta compuestos por una serie de coordenadas 
+    que actuan como una linea de puntos que definen los vertices de la linea,
+    estos vertices se interconectan para representar la FORMA real y precisa
+    de la calle a lo largo de su longitud.
+
+    
+
+
+
+
+
+
