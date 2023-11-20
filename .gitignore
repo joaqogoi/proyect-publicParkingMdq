@@ -6,6 +6,12 @@ __pycache__/
 # C extensions
 *.so
 
+# Archivos generados por entornos virtuales de Python
+Lib/
+Scripts/
+pyvenv.cfg
+share/
+
 # Distribution / packaging
 .Python
 build/
