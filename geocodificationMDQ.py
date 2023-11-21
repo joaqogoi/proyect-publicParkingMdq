@@ -1,6 +1,7 @@
 import geopandas as gpd
 import matplotlib.pyplot as plt
 from shapely.geometry import Polygon, LineString, MultiLineString, Point
+from shapely.ops import unary_union
 
 # Carga del archivo Shape con el mapa de la localidad
 shapefile_path = "C:\Programacion\Python\municipio_mdq_shape\calles.shp"
@@ -42,13 +43,19 @@ def setActionArea(geo_date_frame,*limit_streets_ids):
     return action_polygon
 
 def removeExcessAreas(polygon, lines):
+    areas_deltas = []
     excess_polygon_area = polygon
     for line in lines:
-        print("area antes:", excess_polygon_area)
-        excess_polygon_area = excess_polygon_area.difference(line)
-        print("line: ", line)
-        print("area despues: ", excess_polygon_area)
+        line_geo = LineString(line)
+        area_antes = excess_polygon_area
+        excess_polygon_area = excess_polygon_area.difference(line_geo)
+        area_despues = excess_polygon_area
+        area_delta = area_antes - area_despues
+        areas_deltas.append(area_delta)
+
+    print(areas_deltas)
     return excess_polygon_area
+
 
 
 def filterStreetsWithinActionPolygon(geo_data_frame, action_polygon):
@@ -63,7 +70,6 @@ def filterStreetsWithinActionPolygon(geo_data_frame, action_polygon):
 
 action_area = setActionArea(shapefile_gdf, 298, 717, 465, 425, 560, 826)
 print(action_area)
-
 polygonMappingArea = filterStreetsWithinActionPolygon(shapefile_gdf, action_area)
 
 #Creacion del GDF del poligono
